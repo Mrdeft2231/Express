@@ -1,18 +1,6 @@
-const { readData, writeData } = require("../utils/data"); // Чтение и запись данных в JSON-файл
+const {writeData } = require("../utils/data"); // Чтение и запись данных в JSON-файл
 
 const addGameController = async (req, res) => {
-  // Читаем список игр из файла
-  const games = await readData("./data/games.json");
-  if (!games) {
-      res.status(400);
-      res.send({
-      status: "error",
-      message: "Нет игр в базе данных. Добавьте игру.",
-      });
-      return;
-  }
-  req.games = games;
-  // Проверяем, есть ли уже в списке игра с таким же названием
   req.isNew = !Boolean(req.games.find(item => item.title === req.body.title));
   // Если игра, которую хотим добавить, новая (её не было в списке)
   if (req.isNew) {
@@ -47,32 +35,11 @@ const addGameController = async (req, res) => {
   });
 }
 
-const getAllGames = async (req, res) => {
-  const games = await readData("./data/games.json");
-  if (!games) {
-    res.status(400);
-    res.send({
-      status: "error",
-      message: "Нет игр в базе данных. Добавьте игру."
-    });
-    return;
-  }
-  req.games = games;
+const sendAllGames = async (req, res) => {
   res.send(req.games);
 };
 
 const deleteGame = async (req, res) => {
-    // Получим данные из файла
-  const games = await readData("./data/games.json");
-  if (!games) {
-    res.status(400);
-    res.send({
-      status: "error",
-      message: "Нет игр в базе данных. Добавьте игру.",
-    });
-    return;
-  }
-  req.games = games;
   
   // Прочитаем запрашиваемый id игры из запроса
     const id = Number(req.params.id);
@@ -96,4 +63,4 @@ const deleteGame = async (req, res) => {
   });
 }
 
-module.exports = { getAllGames, deleteGame, addGameController };
+module.exports = { sendAllGames, deleteGame, addGameController };
