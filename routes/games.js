@@ -1,6 +1,6 @@
 // routes/games.js
 const gamesRouter = require("express").Router(); // Создали роутер
-const { sendAllGames, deleteGame, addGameController } = require("../controllers/games");
+const { sendAllGames, deleteGame, addGameController, } = require("../controllers/games");
 const { getAllGames } = require("../middlewares/games");
 // Получим игры из JSON-файла и отправим в ответ на запрос
 

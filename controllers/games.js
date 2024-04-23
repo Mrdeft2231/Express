@@ -1,5 +1,6 @@
 const {writeData } = require("../utils/data"); // Чтение и запись данных в JSON-файл
 
+
 const addGameController = async (req, res) => {
   req.isNew = !Boolean(req.games.find(item => item.title === req.body.title));
   // Если игра, которую хотим добавить, новая (её не было в списке)
@@ -61,6 +62,12 @@ const deleteGame = async (req, res) => {
     games: req.games,
     updated: req.game
   });
+
+  const sendAllGames = async (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(req.games));
+  }
+
 }
 
-module.exports = { sendAllGames, deleteGame, addGameController };
+module.exports = { sendAllGames, deleteGame, addGameController, sendAllGames };
